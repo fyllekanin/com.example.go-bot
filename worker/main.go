@@ -1,10 +1,12 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"github.com/bwmarrin/discordgo"
-	"main/handlers"
+	"log"
+	"net"
 	"os"
 	"os/signal"
 	"syscall"
@@ -14,13 +16,29 @@ var (
 	Token string
 )
 
+type payload struct {
+	TYPE string `json:"type"`
+}
+
 func init() {
 	flag.StringVar(&Token, "t", "", "Bot Token")
 	flag.Parse()
 }
 
 func main() {
-	start()
+	conn, err := net.Dial("tcp", ":8080")
+	if err != nil {
+		fmt.Println("Error connecting:", err.Error())
+		os.Exit(1)
+	}
+
+	b, err := json.Marshal(payload {
+		"worker",
+	})
+	conn.Write(b)
+	fmt.Println("Sent first event to server")
+
+	start(conn)
 
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
@@ -29,15 +47,12 @@ func main() {
 
 
 
-func start() {
+func start(conn net.Conn) {
 	dg, err := discordgo.New("Bot " + Token)
 	if err != nil {
 		fmt.Println("error creating Discord session,", err)
 		return
 	}
-
-	dg.AddHandler(handlers.OnMessage)
-	dg.AddHandler(messageDelete)
 
 	dg.Identify.Intents = discordgo.IntentsGuildMessages
 
@@ -47,13 +62,14 @@ func start() {
 		return
 	}
 
-	message, arr := dg.ChannelMessageSend("934497562369613824", "hejsan")
-	if message == nil {
-		fmt.Println("gg", arr)
+	for {
+		d := json.NewDecoder(conn)
+		var msg payload
+		d.Decode(&msg)
+
+		log.Print("Server relay:", msg)
 	}
+
 	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
 }
 
-func messageDelete(s *discordgo.Session, m *discordgo.MessageDelete) {
-	fmt.Println("Deleted message")
-}

@@ -2,12 +2,12 @@ FROM golang:1.16-alpine
 
 WORKDIR /app
 
-COPY src/go.mod ./
-COPY src/go.sum ./
+COPY bot/go.mod ./
+COPY bot/go.sum ./
 
 RUN go mod download
 
-COPY src/*.go ./
+COPY bot/*.go ./
 
 RUN go build -o /main
 
