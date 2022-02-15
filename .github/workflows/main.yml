@@ -34,7 +34,27 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: go-lang
-        IMAGE_TAG: 1
+        IMAGE_TAG: 0.0.1
       run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY/balancer:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY/balancer:$IMAGE_TAG
+
+    - name: Build, tag, and push image to Amazon ECR - bot
+      working-directory: bot
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: go-lang
+        IMAGE_TAG: 0.0.1
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY/bot:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY/bot:$IMAGE_TAG
+
+    - name: Build, tag, and push image to Amazon ECR - worker
+      working-directory: worker
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: go-lang
+        IMAGE_TAG: 0.0.1
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY/worker:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY/worker:$IMAGE_TAG
