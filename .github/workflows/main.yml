@@ -36,8 +36,8 @@ jobs:
         ECR_REPOSITORY: balancer
         IMAGE_TAG: 0.0.1
       run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY/balancer:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY/balancer:$IMAGE_TAG
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
     - name: Build, tag, and push image to Amazon ECR - bot
       working-directory: bot
@@ -46,8 +46,8 @@ jobs:
         ECR_REPOSITORY: bot
         IMAGE_TAG: 0.0.1
       run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY/bot:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY/bot:$IMAGE_TAG
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
     - name: Build, tag, and push image to Amazon ECR - worker
       working-directory: worker
@@ -56,5 +56,5 @@ jobs:
         ECR_REPOSITORY: worker
         IMAGE_TAG: 0.0.1
       run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY/worker:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY/worker:$IMAGE_TAG
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
