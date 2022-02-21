@@ -28,7 +28,7 @@ func init() {
 
 func main() {
 	d := net.Dialer{Timeout: 30 * time.Second}
-	conn, err := d.Dial("tcp", ":8080")
+	conn, err := d.Dial("tcp", "balancer:8080")
 	if err != nil {
 		fmt.Println("Error connecting:", err.Error())
 		os.Exit(1)
