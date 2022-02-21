@@ -40,7 +40,7 @@ func start() {
 		return
 	}
 
-	conn, err := net.Dial("tcp", ":8080")
+	conn, err := net.Dial("tcp", "balancer:8080")
 	if err != nil {
 		fmt.Println("Error connecting:", err.Error())
 		os.Exit(1)
