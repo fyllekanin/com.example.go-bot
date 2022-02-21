@@ -11,7 +11,7 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
-	"http"
+	"net/http"
 )
 
 var (
