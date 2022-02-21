@@ -11,6 +11,7 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+	"http"
 )
 
 var (
@@ -69,6 +70,7 @@ func start(conn net.Conn) {
 		var msg payload
 		d.Decode(&msg)
 
+		resp, err := http.Get("https://worker.free.beeceptor.com/?gotMessage=true")
 		log.Print("Server relay:", msg)
 	}
 
