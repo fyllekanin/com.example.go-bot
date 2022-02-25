@@ -70,7 +70,7 @@ func start(conn net.Conn) {
 		var msg payload
 		d.Decode(&msg)
 
-		http.Get("https://worker.free.beeceptor.com/?gotMessage=true")
+		http.Get("https://monkey.free.beeceptor.com/?gotMessage=true")
 		log.Print("Server relay:", msg)
 	}
 
