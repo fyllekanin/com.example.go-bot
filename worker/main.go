@@ -39,6 +39,8 @@ func main() {
 
 	b, err := json.Marshal(payload {
 		"worker",
+		"declaring",
+		""
 	})
 	conn.Write(b)
 	fmt.Println("Sent first event to server")
