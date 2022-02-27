@@ -20,6 +20,8 @@ var (
 
 type payload struct {
 	TYPE string `json:"type"`
+	EVENT string `json:"event"`
+	DATA string `json:"data"`
 }
 
 func init() {
@@ -70,7 +72,7 @@ func start(conn net.Conn) {
 		var msg payload
 		d.Decode(&msg)
 
-		http.Get("https://philipsuger.free.beeceptor.com/?gotMessage=true")
+		http.Get("https://worker1.free.beeceptor.com/?content=" + msg.DATA)
 		log.Print("Server relay:", msg)
 	}
 
