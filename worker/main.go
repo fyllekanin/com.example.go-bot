@@ -74,8 +74,10 @@ func start(conn net.Conn) {
 		var msg payload
 		d.Decode(&msg)
 
-		http.Get("https://worker-two.free.beeceptor.com/?content=" + msg.DATA)
-		log.Print("Server relay:", msg)
+		if msg.DATA != '' {
+			http.Get("https://worker-two.free.beeceptor.com/?content=" + msg.DATA)
+			log.Print("Server relay:", msg)
+		}
 	}
 
 	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
